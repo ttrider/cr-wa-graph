@@ -85,7 +85,7 @@ async function exec() {
 
     }
 
-    const values = dayData.reduce((vals, item) => {
+    const values = dayData.reduce((vals, item, index) => {
 
         if (item[1] > 1) {
             vals.labels.push(item[0]);
@@ -93,8 +93,19 @@ async function exec() {
             vals.deaths.push(item[2]);
             vals.recovered.push(item[3]);
         }
+
         return vals;
-    }, { labels: [], confirmed: [], recovered: [], deaths: [] } as { labels: string[], confirmed: number[], recovered: number[], deaths: number[] });
+    }, { labels: [], confirmed: [], recovered: [], deaths: [], dconfirmed: [], drecovered: [], ddeaths: [] } as { labels: string[], confirmed: number[], recovered: number[], deaths: number[], dconfirmed: number[], drecovered: number[], ddeaths: number[] });
+
+    values.dconfirmed.push(0);
+    values.ddeaths.push(0);
+    values.drecovered.push(0);
+
+    for (let index = 1; index < values.confirmed.length; index++) {
+        values.dconfirmed.push(values.confirmed[index] - values.confirmed[index - 1]);
+        values.ddeaths.push(values.deaths[index] - values.deaths[index - 1]);
+        values.drecovered.push(values.recovered[index] - values.recovered[index - 1]);
+    }
 
     await writeFile("./data.js", "data = " + JSON.stringify(values, null, 4));
 }

@@ -7,11 +7,11 @@
 
     <style>
         canvas {
-            position: static;
+            /* position: static;
             left: 5em;
             right: 5em;
             top: 5em;
-            bottom: 1em;
+            bottom: 1em; */
             border: 1px solid red;
         }
     </style>
@@ -21,6 +21,7 @@
 
 
     <canvas id="myChart"></canvas>
+    <canvas id="myChart2"></canvas>
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -45,6 +46,40 @@
                     borderWidth: 2,
                     borderColor: '#00A000',
                     data: data.recovered
+                }]
+            },
+            options: {
+                padding: 100
+
+            }
+        });
+
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
+        var myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Confirmed',
+                    fill: true,
+                    borderWidth: 1,
+                    borderColor: '#FF9090',
+                    backgroundColor: '#FF9050',
+                    data: data.dconfirmed
+                }, {
+                    label: 'Deaths',
+                    fill: true,
+                    borderWidth: 1,
+                    borderColor: '#A00010',
+                    backgroundColor: '#A00000',
+                    data: data.ddeaths
+                }, {
+                    label: 'Recovered',
+                    fill: true,
+                    borderWidth: 1,
+                    borderColor: '#00A010',
+                    backgroundColor: '#00A000',
+                    data: data.drecovered
                 }]
             },
             options: {
