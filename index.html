@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
+    <script src="data.js"></script>
+
+    <style>
+        canvas {
+            position: static;
+            left: 5em;
+            right: 5em;
+            top: 5em;
+            bottom: 1em;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <canvas id="myChart"></canvas>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Confirmed',
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: '#FF9050',
+                    data: data.confirmed
+                }, {
+                    label: 'Deaths',
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: '#A00000',
+                    data: data.deaths
+                }, {
+                    label: 'Recovered',
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: '#00A000',
+                    data: data.recovered
+                }]
+            },
+            options: {
+                padding: 100
+
+            }
+        });
+    </script>
+</body>
+
+</html>

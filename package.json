@@ -1,0 +1,16 @@
+{
+  "name": "wa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/csv-parse": "^1.2.2",
+    "@types/node": "^13.9.2",
+    "csv-parse": "^4.8.8"
+  }
+}
