@@ -36,6 +36,8 @@ jobs:
       env:
         CI: true
     - uses: prewk/s3-cp-action@master
+      with:
+        args: --acl public-read
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
@@ -43,6 +45,8 @@ jobs:
         SOURCE: './index.html'
         DEST: 's3://cr-wa/index.html'
     - uses: prewk/s3-cp-action@master
+      with:
+        args: --acl public-read
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
@@ -50,5 +54,5 @@ jobs:
         SOURCE: './data.js'
         DEST: 's3://cr-wa/data.js'
         
-        
+        https://s3.us-east-2.amazonaws.com
         
