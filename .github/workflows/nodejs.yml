@@ -54,5 +54,3 @@ jobs:
         SOURCE: './data.js'
         DEST: 's3://cr-wa/data.js'
         
-        https://s3.us-east-2.amazonaws.com
-        
