@@ -31,3 +31,12 @@ jobs:
     - run: npm test
       env:
         CI: true
+    - uses: prewk/s3-cp-action@master
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+        AWS_REGION: 'us-east-2' # optional: defaults to us-east-1
+        SOURCE: './index.html'
+        DEST: 's3://cr-wa/index.html'
+        
+        
