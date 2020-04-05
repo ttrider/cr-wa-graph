@@ -6,27 +6,60 @@
     <script src="data.js"></script>
 
     <style>
+        body {
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            margin: 1em;
+        }
+        
+        p {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        #lu {
+            float: right;
+            display: inline;
+            margin-left: 2em;
+        }
+        
+        #lu span {
+            margin-left: 0.25em;
+            font-size: 0.7em;
+        }
+        
         canvas {
             /* position: static;
             left: 5em;
             right: 5em;
             top: 5em;
             bottom: 1em; */
-            border: 1px solid red;
+            border: 1px solid #ff9000;
         }
     </style>
+    <title>Washington State - COVID-19 Stats</title>
 </head>
 
 <body>
 
+    <div style="margin-top: 2em;">
+        <span style="font-weight: bold; font-size: 1.3em;">COVID-19 Stats</span>
+        <div id="lu"><span>Data Source:</span><span><a href="https://github.com/CSSEGISandData/COVID-19" target="_new"><span>Data Repository by Johns Hopkins CSSE</span></a>
+            </span><span>last updated:</span><span id="luv" style="font-weight: bold;">1/1/1</span></div>
+    </div>
 
     <canvas id="myChart"></canvas>
+    <br />
     <canvas id="myChart2"></canvas>
     <script>
         var data = wa_data;
+        var luv_el = document.getElementById("luv");
+
+        luv.innerText = data.labels[data.labels.length - 1];
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
+
+
             type: 'line',
             data: {
                 labels: data.labels,
@@ -51,8 +84,15 @@
                 }]
             },
             options: {
-                padding: 100
-
+                padding: 100,
+                title: {
+                    display: true,
+                    fontSize: 16,
+                    position: "top",
+                    text: [
+                        "Washington State - Total Cases"
+                    ]
+                }
             }
         });
 
@@ -85,7 +125,15 @@
                 }]
             },
             options: {
-                padding: 100
+                padding: 100,
+                title: {
+                    display: true,
+                    fontSize: 16,
+                    position: "top",
+                    text: [
+                        "Washington State - Daily Changes"
+                    ]
+                }
 
             }
         });
