@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
+    <script src="data.js"></script>
+
+    <style>
+        body {
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            margin: 1em;
+        }
+        
+        p {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        #lu {
+            float: right;
+            display: inline;
+            margin-left: 2em;
+        }
+        
+        #lu span {
+            margin-left: 0.25em;
+            font-size: 0.7em;
+        }
+        
+        #lu a {
+            margin-left: 0.25em;
+            font-size: 0.7em;
+        }
+        
+        canvas {
+            /* position: static;
+            left: 5em;
+            right: 5em;
+            top: 5em;
+            bottom: 1em; */
+            border: 1px solid #ff9000;
+        }
+    </style>
+    <title>Big New York - COVID-19 Stats</title>
+</head>
+
+<body>
+
+    <div>
+        <table style="width: 100%">
+            <tr>
+                <td><span style="font-weight: bold; font-size: 1.3em;">COVID-19 Stats</span>
+                    <br> NY: Westchester, Bronx, New York City, Kings, Richmond, Queens<br> NJ: Bergen, Hudson, Passaic, Essex, Union
+                </td>
+                <td id="lu" style="text-align: right;"><a href="index.html">click here for the Washington State stats</a><br />
+                    <span>Data Source:</span><span><a href="https://github.com/CSSEGISandData/COVID-19"
+                            target="_new"><span>Data
+                                Repository by Johns Hopkins CSSE</span></a>
+                    </span><span>last updated:</span><span id="luv" style="font-weight: bold;">1/1/1</span>
+                </td>
+            </tr>
+        </table>
+
+
+        <canvas id="myChart"></canvas>
+        <br />
+        <canvas id="myChart2"></canvas>
+        <script>
+            var data = ny_data;
+            var luv_el = document.getElementById("luv");
+
+            luv.innerText = data.labels[data.labels.length - 1];
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+
+
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Confirmed',
+                        fill: false,
+                        borderWidth: 2,
+                        borderColor: '#FF9050',
+                        data: data.confirmed
+                    }, {
+                        label: 'Deaths',
+                        fill: false,
+                        borderWidth: 2,
+                        borderColor: '#A00000',
+                        data: data.deaths
+                    }, {
+                        label: 'Recovered',
+                        fill: false,
+                        borderWidth: 2,
+                        borderColor: '#00A000',
+                        data: data.recovered
+                    }]
+                },
+                options: {
+                    padding: 100,
+                    title: {
+                        display: true,
+                        fontSize: 16,
+                        position: "top",
+                        text: [
+                            "Big New York - Total Cases"
+                        ]
+                    }
+                }
+            });
+
+            var ctx2 = document.getElementById('myChart2').getContext('2d');
+            var myChart2 = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Confirmed',
+                        fill: true,
+                        borderWidth: 1,
+                        borderColor: '#FF9090',
+                        backgroundColor: '#FF9050',
+                        data: data.dconfirmed
+                    }, {
+                        label: 'Deaths',
+                        fill: true,
+                        borderWidth: 1,
+                        borderColor: '#A00010',
+                        backgroundColor: '#A00000',
+                        data: data.ddeaths
+                    }, {
+                        label: 'Recovered',
+                        fill: true,
+                        borderWidth: 1,
+                        borderColor: '#00A010',
+                        backgroundColor: '#00A000',
+                        data: data.drecovered
+                    }]
+                },
+                options: {
+                    padding: 100,
+                    title: {
+                        display: true,
+                        fontSize: 16,
+                        position: "top",
+                        text: [
+                            "Big New York - Daily Changes"
+                        ]
+                    }
+
+                }
+            });
+        </script>
+</body>
+
+</html>
