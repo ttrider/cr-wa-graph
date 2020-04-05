@@ -23,6 +23,8 @@
     <canvas id="myChart"></canvas>
     <canvas id="myChart2"></canvas>
     <script>
+        var data = wa_data;
+
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'line',
