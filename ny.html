@@ -66,10 +66,10 @@
         <br />
         <canvas id="myChart2"></canvas>
         <script>
-            var data = ny_data;
+            var data = ny_data.main;
             var luv_el = document.getElementById("luv");
 
-            luv.innerText = data.labels[data.labels.length - 1];
+            luv.innerText = ny_data.labels[ny_data.labels.length - 1];
 
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
@@ -77,7 +77,7 @@
 
                 type: 'line',
                 data: {
-                    labels: data.labels,
+                    labels: ny_data.labels,
                     datasets: [{
                         label: 'Confirmed',
                         fill: false,
@@ -115,7 +115,7 @@
             var myChart2 = new Chart(ctx2, {
                 type: 'bar',
                 data: {
-                    labels: data.labels,
+                    labels: ny_data.labels,
                     datasets: [{
                         label: 'Confirmed',
                         fill: true,

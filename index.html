@@ -58,10 +58,11 @@
     <br />
     <canvas id="myChart2"></canvas>
     <script>
-        var data = wa_data;
+        var data = wa_data.main;
+        var focus = wa_data.focus;
         var luv_el = document.getElementById("luv");
 
-        luv.innerText = data.labels[data.labels.length - 1];
+        luv.innerText = wa_data.labels[wa_data.labels.length - 1];
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -69,7 +70,7 @@
 
             type: 'line',
             data: {
-                labels: data.labels,
+                labels: wa_data.labels,
                 datasets: [{
                     label: 'Confirmed',
                     fill: false,
@@ -83,11 +84,17 @@
                     borderColor: '#A00000',
                     data: data.deaths
                 }, {
-                    label: 'Recovered',
+                    label: 'King - Confirmed',
                     fill: false,
                     borderWidth: 2,
-                    borderColor: '#00A000',
-                    data: data.recovered
+                    borderColor: '#A08020',
+                    data: focus.confirmed
+                }, {
+                    label: 'King - Deaths',
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: '#FF5090',
+                    data: focus.deaths
                 }]
             },
             options: {
@@ -107,7 +114,7 @@
         var myChart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: data.labels,
+                labels: wa_data.labels,
                 datasets: [{
                     label: 'Confirmed',
                     fill: true,
@@ -123,12 +130,19 @@
                     backgroundColor: '#A00000',
                     data: data.ddeaths
                 }, {
-                    label: 'Recovered',
+                    label: 'King - Confirmed',
                     fill: true,
                     borderWidth: 1,
-                    borderColor: '#00A010',
-                    backgroundColor: '#00A000',
-                    data: data.drecovered
+                    borderColor: '#FF5090',
+                    backgroundColor: '#FF5090',
+                    data: focus.dconfirmed
+                }, {
+                    label: 'King - Deaths',
+                    fill: true,
+                    borderWidth: 1,
+                    borderColor: '#A08020',
+                    backgroundColor: '#A08020',
+                    data: focus.ddeaths
                 }]
             },
             options: {
