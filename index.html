@@ -43,10 +43,34 @@
 
     <div style="margin-top: 2em;">
         <span style="font-weight: bold; font-size: 1.3em;">COVID-19 Stats</span>
-        <div id="lu"><span>Data Source:</span><span><a href="https://github.com/CSSEGISandData/COVID-19" target="_new"><span>Data Repository by Johns Hopkins CSSE</span></a>
+        <div id="lu"><span>Data Source:</span><span><a href="https://github.com/CSSEGISandData/COVID-19"
+                    target="_new"><span>Data Repository by Johns Hopkins CSSE</span></a>
             </span><span>last updated:</span><span id="luv" style="font-weight: bold;">1/1/1</span></div>
     </div>
 
+    <div style="margin-top: 2em;">
+        <span style="font-weight: bold; font-size: 1.3em;">Last 2 weeks</span>
+    </div>
+
+    <table id="l2w">
+        <tr>
+            <th>Date</th>
+            <th>New Confirmed Cases</th>
+            <th>New Deaths</th>
+        </tr>
+    </table>
+
+    <div style="display: flex">
+        <div style="position: relative; width:50%">
+            <canvas id="myChart3"></canvas>
+        </div>
+        <div style="position: relative;  width:50%">
+            <canvas id="myChart4"></canvas>
+        </div>
+    </div>
+    <div style="margin-top: 2em;">
+        <span style="font-weight: bold; font-size: 1.3em;">All</span>
+    </div>
     <canvas id="myChart"></canvas>
     <br />
     <canvas id="myChart2"></canvas>
@@ -131,6 +155,101 @@
                     position: "top",
                     text: [
                         "Washington State - Daily Changes"
+                    ]
+                }
+
+            }
+        });
+
+
+        var lb3 = data.labels.slice(data.labels.length - 14);
+        var dtc3 = data.confirmed.slice(data.confirmed.length - 14);
+        var dtd3 = data.deaths.slice(data.deaths.length - 14);
+        var ctx3 = document.getElementById('myChart3').getContext('2d');
+        var myChart3 = new Chart(ctx3, {
+
+
+            type: 'line',
+            data: {
+                labels: lb3,
+                datasets: [{
+                    label: 'Confirmed',
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: '#FF9050',
+                    data: dtc3
+                }, {
+                    label: 'Deaths',
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: '#A00000',
+                    data: dtd3
+                }]
+            },
+            options: {
+                padding: 100,
+                title: {
+                    display: true,
+                    fontSize: 16,
+                    position: "top",
+                    text: [
+                        "Washington State - Last 2 weeks Cases"
+                    ]
+                }
+            }
+        });
+
+        var lb4 = data.labels.slice(data.labels.length - 14);
+        var dtc4 = data.dconfirmed.slice(data.dconfirmed.length - 14);
+        var dtd4 = data.ddeaths.slice(data.ddeaths.length - 14);
+
+        var tb = document.getElementById('l2w');
+        for (var i = lb4.length - 1; i >= 0; i--) {
+            var tr = document.createElement("tr");
+            tb.appendChild(tr);
+            var td1 = document.createElement("td");
+            tr.appendChild(td1);
+            var td2 = document.createElement("td");
+            tr.appendChild(td2);
+            var td3 = document.createElement("td");
+            tr.appendChild(td3);
+
+            td1.innerHTML = lb4[i];
+            td2.innerHTML = dtc4[i].toString();
+            td3.innerHTML = dtd4[i].toString();
+        }
+
+        var ctx4 = document.getElementById('myChart4').getContext('2d');
+
+        var ctx4 = document.getElementById('myChart4').getContext('2d');
+        var myChart4 = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: lb4,
+                datasets: [{
+                    label: 'Confirmed',
+                    fill: true,
+                    borderWidth: 1,
+                    borderColor: '#FF9090',
+                    backgroundColor: '#FF9050',
+                    data: dtc4
+                }, {
+                    label: 'Deaths',
+                    fill: true,
+                    borderWidth: 1,
+                    borderColor: '#A00010',
+                    backgroundColor: '#A00000',
+                    data: dtd4
+                }]
+            },
+            options: {
+                padding: 100,
+                title: {
+                    display: true,
+                    fontSize: 16,
+                    position: "top",
+                    text: [
+                        "Washington State - Last 2 weeks Daily Changes"
                     ]
                 }
 
