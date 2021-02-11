@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"
+        integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
     <script src="data.js"></script>
 
     <style>
@@ -10,28 +11,28 @@
             font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
             margin: 1em;
         }
-        
+
         p {
             font-weight: bold;
             font-size: 1.2em;
         }
-        
+
         #lu {
             float: right;
             display: inline;
             margin-left: 2em;
         }
-        
+
         #lu span {
             margin-left: 0.25em;
             font-size: 0.7em;
         }
-        
+
         #lu a {
             margin-left: 0.25em;
             font-size: 0.7em;
         }
-        
+
         canvas {
             /* position: static;
             left: 5em;
@@ -39,12 +40,22 @@
             top: 5em;
             bottom: 1em; */
             border: 1px solid #ff9000;
+
         }
-        
+
+        .chartSmall {
+
+
+            margin-left: 2em;
+            /* width: 100%;
+            height: 100%; */
+
+        }
+
         table {
             border: #ff9000 1px solid;
         }
-        
+
         td {
             padding-left: 0.5em;
             padding-top: 0.2em;
@@ -61,30 +72,38 @@
     <div>
         <span style="font-weight: bold; font-size: 1.3em;">COVID-19 Stats</span>
         <div id="lu">
-            <a href="ny.html">click here for the Big New York stats</a><br />
             <span>Data Source:</span><span><a href="https://github.com/CSSEGISandData/COVID-19" target="_new"><span>Data
                         Repository by Johns Hopkins CSSE</span></a>
-            </span><span>last updated:</span><span id="luv" style="font-weight: bold;">1/1/1</span></div>
+            </span><span>last updated:</span><span id="luv" style="font-weight: bold;">1/1/1</span>
+        </div>
     </div>
 
     <div style="margin-top: 2em;">
-        <span style="font-weight: bold; font-size: 1.3em;">Last 2 weeks</span>
+        <div style="font-weight: bold; font-size: 1.3em;">WA State in the last 2 weeks</div>
+        <div style="display: flex; ">
+            <table id="l2w">
+                <tr>
+                    <th>Date</th>
+                    <th>New Confirmed Cases</th>
+                    <th>New Deaths</th>
+                </tr>
+            </table>
+
+            <div style="position: relative; max-width: 520px; flex-grow:1">
+                <canvas id="myChart3" class="chartSmall"></canvas>
+                <canvas id="myChart4" class="chartSmall"></canvas>
+            </div>
+        </div>
     </div>
 
-    <table id="l2w">
-        <tr>
-            <th>Date</th>
-            <th>New Confirmed Cases</th>
-            <th>New Deaths</th>
-        </tr>
-    </table>
+
 
     <div style="display: flex">
         <div style="position: relative; width:50%">
-            <canvas id="myChart3"></canvas>
+
         </div>
         <div style="position: relative;  width:50%">
-            <canvas id="myChart4"></canvas>
+
         </div>
     </div>
     <div style="margin-top: 2em;">
@@ -236,7 +255,7 @@
         var lb4 = wa_data.labels.slice(wa_data.labels.length - 14);
         var dtc4 = focus.dconfirmed.slice(focus.dconfirmed.length - 14);
         var dtd4 = focus.ddeaths.slice(focus.ddeaths.length - 14);
-        
+
         var totalNewWA = 0;
         var totalDeathWA = 0;
 
@@ -254,11 +273,11 @@
             td1.innerHTML = lb4[i];
             td2.innerHTML = dtc4[i].toString();
             td3.innerHTML = dtd4[i].toString();
-            
-            totalNewWA+=dtc4[i];
-            totalDeathWA+=dtd4[i];
+
+            totalNewWA += dtc4[i];
+            totalDeathWA += dtd4[i];
         }
-        
+
         var tr = document.createElement("tr");
         tb.appendChild(tr);
         var td1 = document.createElement("td");
@@ -271,7 +290,7 @@
         td1.innerHTML = "<B>Total</B>";
         td2.innerHTML = totalNewWA.toString();
         td3.innerHTML = totalDeathWA.toString();
-        
+
 
         var ctx4 = document.getElementById('myChart4').getContext('2d');
 

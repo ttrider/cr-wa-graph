@@ -28,6 +28,9 @@ exec().then(() => console.info("done"));
 async function exec() {
 
     const dataSet = await readData();
+
+    console.info(JSON.stringify(dataSet, null, 2));
+
     const waDayData = await getWAData(dataSet);
     const waValues = await compute(waDayData);
 
@@ -192,13 +195,14 @@ async function readData() {
         .filter(item => item.endsWith(".csv"))
         .map(item => {
 
-            const dts = new Date(item.substr(0, item.length - 4)).toDateString();
+            const dts = new Date(item.substr(0, item.length - 4)).toISOString();
+            console.info(dts);
 
             return {
-                date: dts.substring(0, dts.length - 5),
+                date: dts.substring(0, 10),
                 path: path.resolve(dir, item)
             }
-        });
+        }).sort((a, b) => a.date < b.date ? -1 : 1);
 }
 
 async function compute(dayData: any[][]) {
