@@ -79,7 +79,7 @@
     </div>
 
     <div style="margin-top: 2em;">
-        <div style="font-weight: bold; font-size: 1.3em;">WA State in the last 2 weeks</div>
+        <div style="font-weight: bold; font-size: 1.3em;">WA King County in the last 2 weeks</div>
         <div style="display: flex; ">
             <table id="l2w">
                 <tr>
@@ -92,6 +92,9 @@
             <div style="position: relative; max-width: 520px; flex-grow:1">
                 <canvas id="myChart3" class="chartSmall"></canvas>
                 <canvas id="myChart4" class="chartSmall"></canvas>
+                <hr/>
+                <canvas id="myChart" class="chartSmall"></canvas>
+                <canvas id="myChart2" class="chartSmall"></canvas>
             </div>
         </div>
     </div>
@@ -109,148 +112,56 @@
     <div style="margin-top: 2em;">
         <span style="font-weight: bold; font-size: 1.3em;">All</span>
     </div>
-    <canvas id="myChart"></canvas>
-    <br />
-    <canvas id="myChart2"></canvas>
+    
     <script>
         var data = wa_data.main;
         var focus = wa_data.focus;
+        var labels = wa_data.labels;
+
+        var aggLabels = [];
+        var aggCasesFocus = [];
+        var aggFatalitiesFocus = [];
+        var aggCases = [];
+        var aggFatalities = [];
+
+        for (let i = 0; i < labels.length; i++) {
+
+            var bwcasesfocus = 0;
+            let bwdeathsfocus = 0;
+            var bwcases = 0;
+            let bwdeaths = 0;
+
+            for (k = 0; i < labels.length && k < 14; i++, k++) {
+                bwcasesfocus += focus.dconfirmed[i];
+                bwdeathsfocus += focus.ddeaths[i];
+                bwcases += data.dconfirmed[i];
+                bwdeaths += data.ddeaths[i];
+            }
+            aggLabels.push(labels[i]);
+            aggCasesFocus.push(bwcasesfocus);
+            aggFatalitiesFocus.push(bwdeathsfocus);
+            aggCases.push(bwcases);
+            aggFatalities.push(bwdeaths);
+        }
+
+        makeChart('myChart', "WA State By-Weekly Cases", aggLabels, '#FF9050', aggCases);
+        makeChart('myChart2', "WA State By-Weekly Fatalities", aggLabels, '#A00000', aggFatalities);
+
+
+        makeChart('myChart3', "WA King County By-Weekly Cases", aggLabels, '#FF9050', aggCasesFocus);
+        makeChart('myChart4', "WA King County By-Weekly Fatalities", aggLabels, '#A00000', aggFatalitiesFocus);
+        
+
+
+
         var luv_el = document.getElementById("luv");
 
         luv.innerText = wa_data.labels[wa_data.labels.length - 1];
-
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-
-
-            type: 'line',
-            data: {
-                labels: wa_data.labels,
-                datasets: [{
-                    label: 'Confirmed',
-                    fill: false,
-                    borderWidth: 2,
-                    borderColor: '#FF9060',
-                    data: data.confirmed
-                }, {
-                    label: 'Deaths',
-                    fill: false,
-                    borderWidth: 2,
-                    borderColor: '#A00000',
-                    data: data.deaths
-                }, {
-                    label: 'King - Confirmed',
-                    fill: false,
-                    borderWidth: 2,
-                    borderColor: '#A08020',
-                    data: focus.confirmed
-                }, {
-                    label: 'King - Deaths',
-                    fill: false,
-                    borderWidth: 2,
-                    borderColor: '#FF5090',
-                    data: focus.deaths
-                }]
-            },
-            options: {
-                padding: 100,
-                title: {
-                    display: true,
-                    fontSize: 16,
-                    position: "top",
-                    text: [
-                        "Washington State - Total Cases"
-                    ]
-                }
-            }
-        });
-
-        var ctx2 = document.getElementById('myChart2').getContext('2d');
-        var myChart2 = new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: wa_data.labels,
-                datasets: [{
-                    label: 'Confirmed',
-                    fill: true,
-                    borderWidth: 1,
-                    borderColor: '#FF9090',
-                    backgroundColor: '#FF9050',
-                    data: data.dconfirmed
-                }, {
-                    label: 'Deaths',
-                    fill: true,
-                    borderWidth: 1,
-                    borderColor: '#A00010',
-                    backgroundColor: '#A00000',
-                    data: data.ddeaths
-                }, {
-                    label: 'King - Confirmed',
-                    fill: true,
-                    borderWidth: 1,
-                    borderColor: '#FF5090',
-                    backgroundColor: '#FF5090',
-                    data: focus.dconfirmed
-                }, {
-                    label: 'King - Deaths',
-                    fill: true,
-                    borderWidth: 1,
-                    borderColor: '#A08020',
-                    backgroundColor: '#A08020',
-                    data: focus.ddeaths
-                }]
-            },
-            options: {
-                padding: 100,
-                title: {
-                    display: true,
-                    fontSize: 16,
-                    position: "top",
-                    text: [
-                        "Washington State - Daily Changes"
-                    ]
-                }
-
-            }
-        });
 
 
         var lb3 = wa_data.labels.slice(wa_data.labels.length - 14);
         var dtc3 = focus.confirmed.slice(focus.confirmed.length - 14);
         var dtd3 = focus.deaths.slice(focus.deaths.length - 14);
-        var ctx3 = document.getElementById('myChart3').getContext('2d');
-        var myChart3 = new Chart(ctx3, {
-
-
-            type: 'line',
-            data: {
-                labels: lb3,
-                datasets: [{
-                    label: 'Confirmed',
-                    fill: false,
-                    borderWidth: 2,
-                    borderColor: '#FF9050',
-                    data: dtc3
-                }, {
-                    label: 'Deaths',
-                    fill: false,
-                    borderWidth: 2,
-                    borderColor: '#A00000',
-                    data: dtd3
-                }]
-            },
-            options: {
-                padding: 100,
-                title: {
-                    display: true,
-                    fontSize: 16,
-                    position: "top",
-                    text: [
-                        "Washington State - Last 2 weeks Cases"
-                    ]
-                }
-            }
-        });
 
         var lb4 = wa_data.labels.slice(wa_data.labels.length - 14);
         var dtc4 = focus.dconfirmed.slice(focus.dconfirmed.length - 14);
@@ -292,42 +203,36 @@
         td3.innerHTML = totalDeathWA.toString();
 
 
-        var ctx4 = document.getElementById('myChart4').getContext('2d');
 
-        var ctx4 = document.getElementById('myChart4').getContext('2d');
-        var myChart4 = new Chart(ctx4, {
-            type: 'bar',
-            data: {
-                labels: lb4,
-                datasets: [{
-                    label: 'Confirmed',
-                    fill: true,
-                    borderWidth: 1,
-                    borderColor: '#FF9090',
-                    backgroundColor: '#FF9050',
-                    data: dtc4
-                }, {
-                    label: 'Deaths',
-                    fill: true,
-                    borderWidth: 1,
-                    borderColor: '#A00010',
-                    backgroundColor: '#A00000',
-                    data: dtd4
-                }]
-            },
-            options: {
-                padding: 100,
-                title: {
-                    display: true,
-                    fontSize: 16,
-                    position: "top",
-                    text: [
-                        "Washington State - Last 2 weeks Daily Changes"
-                    ]
+
+
+
+
+        function makeChart(id, name, dates, color, data) {
+
+
+            var newChartElement = document.getElementById(id).getContext('2d');
+
+            var myChart3 = new Chart(newChartElement, {
+
+                type: 'bar',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: name,
+                        fill: true,
+                        borderWidth: 2,
+                        borderColor: color,
+                        data: data
+                    }]
+                },
+                options: {
+                    padding: 100
                 }
+            });
+        }
 
-            }
-        });
+
     </script>
 </body>
 
