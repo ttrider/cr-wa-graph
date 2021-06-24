@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && node index.js"
+    "test": "tsc && node index.js && mkdir -p ./dist/ && cp ./data.js ./dist/data.js && cp ./index.html ./dist/index.html"
   },
   "author": "",
   "license": "ISC",
